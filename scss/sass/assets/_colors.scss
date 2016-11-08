@@ -1,0 +1,23 @@
+// Button
+$btn-primary-color: #fff;
+$btn-primary-bg-color: #888;
+$btn-primary-border-color: darken($btn-primary-bg-color, 5%);
+
+// Input
+$input-color: #333;
+$input-bg: #fff;
+$control-border-color: #ccc;
+
+//** Background color for `<body>`.
+$body-bg:               #fff !default;
+//** Global text color on `<body>`.
+$text-color:            #000;
+
+// Box
+$box-border-color: rgba(17, 33, 80, 0.56);
+
+// Error
+$error-color: #d20000;
+
+// OK
+$ok-color: #00d200;

@@ -1,0 +1,15 @@
+@import "colors";
+@import "./mixins/buttons";
+
+.button {
+  padding: $padding-button-vertical $padding-button-horizontal;
+  margin: $margin-button-vertical $margin-button-horizontal;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  float: inherit;
+}
+
+.button-primary {
+  @include button-variant($btn-primary-color, $btn-primary-bg-color, $btn-primary-border-color);
+}
