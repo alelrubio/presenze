@@ -61,8 +61,7 @@
         </div>
 
 		<div class="buttons">
-            <!--<button type="submit" class="button button-primary" ng-click="save()">{{::labels.saveUser}}</button>-->
-            <button type="submit" class="button button-primary">{{::labels.saveUser}}</button>
+            <button type="submit" class="button button-primary" ng-disabled="!formNewUser.$valid" ng-click="save()">{{::labels.saveUser}}</button>
             <button type="button" class="button button-primary" ng-click="goToLogin()">{{::labels.backToLogin}}</button>
         </div>
     </form>

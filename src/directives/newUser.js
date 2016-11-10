@@ -10,22 +10,52 @@ module.exports = function (ngModule) {
         var self = this;
 
         this.init = function() {
+
+            this.resetData();
+
             console.log('New User');
         };
 
+
+        this.resetData = function() {
+            $scope.user.firstName = '';
+            $scope.user.lastName = '';
+            $scope.user.email = '';
+            $scope.user.username = '';
+            $scope.user.password = '';
+            
+            //if($scope.formLogin != null)
+              //$scope.formLogin.$setUntouched();
+        };
+
+        $scope.goToLogin = function() {
+            //$scope.formLogin.$setUntouched();
+            //self.init();
+            //$scope.showLogin = true;
+            //$scope.changeShowLogin(true);
+            $scope.resetData();
+            $state.go(states.login);
+
+
+        };
+
+
         $scope.save = function() {
 
+/*
             var userdata = {
-                firstName: 'Pippo',
+                firstName: 'Pippetto',
                 lastName: 'Baudo',
                 email: 'pippo@baudo.it',
                 username: 'pippo',
-                password: 'baudo'
+                password: 'Pippetto20'
             };
+*/
 
-            console.log('save user')
+            console.log('save user');
 
-            login.save(userdata).then(function(result) {
+
+            login.save($scope.user).then(function(result) {
                 console.log('User saved')
             }, function (error) {
                 console.log('error: ', error)

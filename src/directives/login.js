@@ -5,19 +5,47 @@ var angular = require('angular')
 
 module.exports = function (ngModule) {
 
+
     ngModule.controller('loginCtrl', ['$scope', 'states', '$state', 'assetsLang', 'lang', 'login', function ($scope, states, $state, assetsLang, lang, login) {
         var self = this;
+
+
+        
         
 		this.init = function() {
-            $scope.user = {username:'',password:''};
+
+            $scope.user = {firstName:'', lastName:'', email:'',  username:'',password:''};
+
             $scope.errore = false;
 			$scope.labels = angular.extend({}, assetsLang.login, assetsLang.errors, lang.errors);
 			$scope.invalidUsrPsw = false;
+            $scope.showLogin = true;
+
+            console.log("init - login");
+
+
         };
 
-        $scope.newUser = function() {
-            $state.go(states.newUser);
+        $scope.resetData = function() {
+            console.log('resetData in  LOGIN');
+
+            $scope.user.username = '';
+            $scope.user.password = '';
+
+            //$scope.changeShowLogin(true);            
+            $scope.showLogin = true;
+            $scope.invalidUsrPsw = false;
+            $scope.formLogin.$setPristine();            
+            $scope.formLogin.$setUntouched();
         };
+
+
+        $scope.newUser = function() {
+            $scope.showLogin = false;
+            $state.go(states.newUser);
+
+        };
+
 
         $scope.login = function () {
 		    console.log("chiamata FUNZIONE login");
