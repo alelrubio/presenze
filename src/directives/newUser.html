@@ -1,1 +1,77 @@
-<button class="button button-primary" type="button" ng-click="save()">Salva</button>
+
+<div class="loginPage">
+
+    <form class="loginForm box-form" name="formNewUser" ng-submit="save()">
+
+	   <h2 class="title">{{::labels.newUser}}</h2>
+
+        <div class="formControl">
+            <label for="firstName">{{::labels.firstName}}</label>
+            <input class="form-control" type="text" id="firstName" name="firstName" required="true" ng-model="user.firstName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <div class="messages">
+				<div ng-messages="formNewUser.firstName.$error" ng-show="formNewUser.$submitted || formNewUser.firstName.$touched">
+                	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="formControl">
+            <label for="lastName">{{::labels.lastName}}</label>
+            <input class="form-control" type="text" id="lastName" name="lastName" required="true" ng-model="user.lastName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <div class="messages">
+				<div ng-messages="formNewUser.lastName.$error" ng-show="formNewUser.$submitted || formNewUser.lastName.$touched">
+                	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="formControl">
+            <label for="email">{{::labels.email}}</label>
+            <input class="form-control" type="text" id="email" name="email" required="true" ng-model="user.email"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" validate-email />
+            <div class="messages">
+				<div ng-messages="formNewUser.email.$error" ng-show="formNewUser.$submitted || formNewUser.email.$touched">
+                	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+				    <div ng-message="emailNotValid">{{::labels.emailNotValid}}</div>
+                </div>
+            </div>
+        </div>
+	   
+        <div class="formControl">
+            <label for="username">{{::labels.username}}</label>
+            <input class="form-control" type="text" id="username" name="username" required="true" ng-model="user.username"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <div class="messages">
+				<div ng-messages="formNewUser.username.$error" ng-show="formNewUser.$submitted || formNewUser.username.$touched">
+                	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+				</div>
+            </div>
+        </div>
+		
+		
+
+        <div class="formControl">
+			<label for="password">{{::labels.password}}</label>
+			<input class="form-control" type="password" id="password" name="password" required="true" minlength="8" validate-password ng-model="user.password" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" >
+            <div class="messages">
+				<div ng-messages="formNewUser.password.$error" ng-show="formNewUser.$submitted || formNewUser.password.$touched">
+					<div ng-message="required">{{::labels.valueNotInserted}}</div>
+					<div ng-message="minlength">{{::labels.valueTooShort}}</div>
+					<div ng-message="passwordNotValid">{{::labels.passwordNotValid}}</div>
+				</div>
+			</div>
+        </div>
+
+		<div class="buttons">
+            <!--<button type="submit" class="button button-primary" ng-click="save()">{{::labels.saveUser}}</button>-->
+            <button type="submit" class="button button-primary">{{::labels.saveUser}}</button>
+            <button type="button" class="button button-primary" ng-click="goToLogin()">{{::labels.backToLogin}}</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+
