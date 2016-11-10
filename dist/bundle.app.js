@@ -19,18 +19,19 @@ webpackJsonp([0],[
 
 	__webpack_require__(4);
 	__webpack_require__(5);
-
 	__webpack_require__(7);
 
-	var ngModule = angular.module('app', ['ui.router', 'ngMessages']);
+	__webpack_require__(8);
 
-	__webpack_require__(11)(ngModule);
-	__webpack_require__(15)(ngModule);
-	__webpack_require__(17)(ngModule);
+	var ngModule = angular.module('app', ['ui.router', 'ngMessages', 'ui.bootstrap.showErrors']);
 
-	__webpack_require__(19)(ngModule);
+	__webpack_require__(12)(ngModule);
+	__webpack_require__(16)(ngModule);
+	__webpack_require__(18)(ngModule);
 
-	__webpack_require__(23)(ngModule);
+	__webpack_require__(20)(ngModule);
+
+	__webpack_require__(26)(ngModule);
 
 /***/ },
 /* 2 */,
@@ -39,15 +40,120 @@ webpackJsonp([0],[
 /* 5 */,
 /* 6 */,
 /* 7 */
+/***/ function(module, exports) {
+
+	(function() {
+	  var showErrorsModule;
+
+	  showErrorsModule = angular.module('ui.bootstrap.showErrors', []);
+
+	  showErrorsModule.directive('showErrors', [
+	    '$timeout', 'showErrorsConfig', '$interpolate', function($timeout, showErrorsConfig, $interpolate) {
+	      var getShowSuccess, getTrigger, linkFn;
+	      getTrigger = function(options) {
+	        var trigger;
+	        trigger = showErrorsConfig.trigger;
+	        if (options && (options.trigger != null)) {
+	          trigger = options.trigger;
+	        }
+	        return trigger;
+	      };
+	      getShowSuccess = function(options) {
+	        var showSuccess;
+	        showSuccess = showErrorsConfig.showSuccess;
+	        if (options && (options.showSuccess != null)) {
+	          showSuccess = options.showSuccess;
+	        }
+	        return showSuccess;
+	      };
+	      linkFn = function(scope, el, attrs, formCtrl) {
+	        var blurred, inputEl, inputName, inputNgEl, options, showSuccess, toggleClasses, trigger;
+	        blurred = false;
+	        options = scope.$eval(attrs.showErrors);
+	        showSuccess = getShowSuccess(options);
+	        trigger = getTrigger(options);
+	        inputEl = el[0].querySelector('.form-control[name]');
+	        inputNgEl = angular.element(inputEl);
+	        inputName = $interpolate(inputNgEl.attr('name') || '')(scope);
+	        if (!inputName) {
+	          throw "show-errors element has no child input elements with a 'name' attribute and a 'form-control' class";
+	        }
+	        inputNgEl.bind(trigger, function() {
+	          blurred = true;
+	          return toggleClasses(formCtrl[inputName].$invalid);
+	        });
+	        scope.$watch(function() {
+	          return formCtrl[inputName] && formCtrl[inputName].$invalid;
+	        }, function(invalid) {
+	          if (!blurred) {
+	            return;
+	          }
+	          return toggleClasses(invalid);
+	        });
+	        scope.$on('show-errors-check-validity', function() {
+	          return toggleClasses(formCtrl[inputName].$invalid);
+	        });
+	        scope.$on('show-errors-reset', function() {
+	          return $timeout(function() {
+	            el.removeClass('has-error');
+	            el.removeClass('has-success');
+	            return blurred = false;
+	          }, 0, false);
+	        });
+	        return toggleClasses = function(invalid) {
+	          el.toggleClass('has-error', invalid);
+	          if (showSuccess) {
+	            return el.toggleClass('has-success', !invalid);
+	          }
+	        };
+	      };
+	      return {
+	        restrict: 'A',
+	        require: '^form',
+	        compile: function(elem, attrs) {
+	          if (attrs['showErrors'].indexOf('skipFormGroupCheck') === -1) {
+	            if (!(elem.hasClass('form-group') || elem.hasClass('input-group'))) {
+	              throw "show-errors element does not have the 'form-group' or 'input-group' class";
+	            }
+	          }
+	          return linkFn;
+	        }
+	      };
+	    }
+	  ]);
+
+	  showErrorsModule.provider('showErrorsConfig', function() {
+	    var _showSuccess, _trigger;
+	    _showSuccess = false;
+	    _trigger = 'blur';
+	    this.showSuccess = function(showSuccess) {
+	      return _showSuccess = showSuccess;
+	    };
+	    this.trigger = function(trigger) {
+	      return _trigger = trigger;
+	    };
+	    this.$get = function() {
+	      return {
+	        showSuccess: _showSuccess,
+	        trigger: _trigger
+	      };
+	    };
+	  });
+
+	}).call(this);
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(8);
+	var content = __webpack_require__(9);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(10)(content, {});
+	var update = __webpack_require__(11)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -64,10 +170,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(9)();
+	exports = module.exports = __webpack_require__(10)();
 	// imports
 
 
@@ -78,7 +184,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/*
@@ -134,7 +240,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -386,7 +492,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -397,13 +503,13 @@ webpackJsonp([0],[
 
 	module.exports = function (ngModule) {
 
-	  __webpack_require__(12)(ngModule);
 	  __webpack_require__(13)(ngModule);
 	  __webpack_require__(14)(ngModule);
+	  __webpack_require__(15)(ngModule);
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -432,7 +538,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -448,13 +554,32 @@ webpackJsonp([0],[
 	        var self = this;
 
 	        this.init = function () {
-	            $scope.user = { username: '', password: '' };
+
+	            $scope.user = { firstName: '', lastName: '', email: '', username: '', password: '' };
+
 	            $scope.errore = false;
 	            $scope.labels = angular.extend({}, assetsLang.login, assetsLang.errors, lang.errors);
 	            $scope.invalidUsrPsw = false;
+	            $scope.showLogin = true;
+
+	            console.log("init - login");
+	        };
+
+	        $scope.resetData = function () {
+	            console.log('resetData in  LOGIN');
+
+	            $scope.user.username = '';
+	            $scope.user.password = '';
+
+	            //$scope.changeShowLogin(true);            
+	            $scope.showLogin = true;
+	            $scope.invalidUsrPsw = false;
+	            $scope.formLogin.$setPristine();
+	            $scope.formLogin.$setUntouched();
 	        };
 
 	        $scope.newUser = function () {
+	            $scope.showLogin = false;
 	            $state.go(states.newUser);
 	        };
 
@@ -480,7 +605,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -497,22 +622,47 @@ webpackJsonp([0],[
 	        var self = this;
 
 	        this.init = function () {
+
+	            this.resetData();
+
 	            console.log('New User');
+	        };
+
+	        this.resetData = function () {
+	            $scope.user.firstName = '';
+	            $scope.user.lastName = '';
+	            $scope.user.email = '';
+	            $scope.user.username = '';
+	            $scope.user.password = '';
+
+	            //if($scope.formLogin != null)
+	            //$scope.formLogin.$setUntouched();
+	        };
+
+	        $scope.goToLogin = function () {
+	            //$scope.formLogin.$setUntouched();
+	            //self.init();
+	            //$scope.showLogin = true;
+	            //$scope.changeShowLogin(true);
+	            $scope.resetData();
+	            $state.go(states.login);
 	        };
 
 	        $scope.save = function () {
 
-	            var userdata = {
-	                firstName: 'Pippo',
-	                lastName: 'Baudo',
-	                email: 'pippo@baudo.it',
-	                username: 'pippo',
-	                password: 'baudo'
-	            };
+	            /*
+	                        var userdata = {
+	                            firstName: 'Pippetto',
+	                            lastName: 'Baudo',
+	                            email: 'pippo@baudo.it',
+	                            username: 'pippo',
+	                            password: 'Pippetto20'
+	                        };
+	            */
 
 	            console.log('save user');
 
-	            login.save(userdata).then(function (result) {
+	            login.save($scope.user).then(function (result) {
 	                console.log('User saved');
 	            }, function (error) {
 	                console.log('error: ', error);
@@ -524,7 +674,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -534,11 +684,11 @@ webpackJsonp([0],[
 	 */
 
 	module.exports = function (ngModule) {
-	  __webpack_require__(16)(ngModule);
+	  __webpack_require__(17)(ngModule);
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -551,14 +701,15 @@ webpackJsonp([0],[
 
 	    ngModule.constant('lang', {
 	        "errors": {
-	            "passwordNotValid": "Password non valida, inserire almeno un carattere Minuscolo, un carattere Maiuscolo ed una cifra"
+	            "passwordNotValid": "Password non valida, inserire almeno un carattere Minuscolo, un carattere Maiuscolo ed una cifra",
 
+	            "emailNotValid": "Email non corretta"
 	        }
 	    });
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -568,11 +719,11 @@ webpackJsonp([0],[
 	 */
 
 	module.exports = function (ngModule) {
-	  __webpack_require__(18)(ngModule);
+	  __webpack_require__(19)(ngModule);
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -585,6 +736,7 @@ webpackJsonp([0],[
 	    ngModule.service('login', ['$q', 'backend', function ($q, backend) {
 
 	        this.save = function (user) {
+	            console.log("chiamata al SERVIZIO save in login.js");
 	            var deferred = $q.defer();
 	            backend.call({
 	                action: {
@@ -593,6 +745,8 @@ webpackJsonp([0],[
 	                },
 	                data: user
 	            }).then(function (result) {
+	                console.log('ritorno SERVIZIO save in login.js');
+
 	                deferred.resolve(result);
 	            }, function (error) {
 	                deferred.reject(error);
@@ -602,6 +756,7 @@ webpackJsonp([0],[
 
 	        this.login = function (user) {
 	            console.log("chiamata al SERVIZIO login in login.js");
+
 	            var deferred = $q.defer();
 
 	            backend.call({
@@ -615,13 +770,14 @@ webpackJsonp([0],[
 	            }, function (error) {
 	                deferred.reject(error);
 	            });
+	            console.log("ritorno al SERVIZIO login in login.js");
 	            return deferred.promise;
 	        };
 	    }]);
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -631,15 +787,15 @@ webpackJsonp([0],[
 	 */
 
 	module.exports = function (ngModule) {
-	    __webpack_require__(20)(ngModule);
-
-	    __webpack_require__(28)(ngModule);
+	    __webpack_require__(21)(ngModule);
 
 	    __webpack_require__(22)(ngModule);
+
+	    __webpack_require__(25)(ngModule);
 	};
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -654,9 +810,16 @@ webpackJsonp([0],[
 
 	        "login": {
 	            "login": "Login",
+	            "firstName": "Nome",
+	            "lastName": "Cognome",
+	            "email": "Email",
+
 	            "password": "Password",
 	            "username": "Username",
-	            "newUser": "Nuovo Utente"
+	            "newUser": "Nuovo Utente",
+	            "saveUser": "Salva Utente",
+	            "backToLogin": "Torna alla pagina di login"
+
 	        },
 	        "errors": {
 	            "valueNotInserted": "Valore richiesto non inserito",
@@ -667,7 +830,65 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 21 */
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Created by esc08andbott on 05/11/2016.
+	 */
+
+	module.exports = function (ngModule) {
+	  __webpack_require__(23)(ngModule);
+	  __webpack_require__(24)(ngModule);
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Created by esc08andbott on 06/10/2016.
+	 */
+
+	module.exports = function (ngModule) {
+	    ngModule.service('backend', function ($http, $q) {
+	        return {
+
+	            //{action: {restCommand, method}, data}
+	            call: function call(callParams) {
+	                if (!callParams) {
+	                    console.error('call without parameters');
+	                    return;
+	                };
+
+	                /*
+	                console.log("method: " + callParams.action.method);
+	                console.log("url: " + callParams.action.url);
+	                console.log("data: " + callParams.data);
+	                */
+	                console.log('call BACKEND');
+	                var deferred = $q.defer();
+	                $http({
+	                    method: callParams.action.method,
+	                    url: callParams.action.url,
+	                    data: callParams.data
+	                }).then(function (result) {
+	                    deferred.resolve(result);
+	                }, function (error) {
+	                    deferred.reject(error);
+	                });
+	                return deferred.promise;
+	            }
+	        };
+	    });
+	};
+
+/***/ },
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -688,7 +909,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -701,12 +922,23 @@ webpackJsonp([0],[
 
 	    ngModule.directive('validatePassword', function () {
 	        return {
-
 	            restrict: 'A',
 	            require: 'ngModel',
 	            link: function link($scope, element, attrs, ngModel) {
 	                ngModel.$validators.passwordNotValid = function (value) {
-	                    return !!value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/);
+	                    console.log("VALUE " + value);
+
+	                    return !!(value != null && value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/));
+	                };
+	            }
+	        };
+	    }).directive('validateEmail', function () {
+	        return {
+	            restrict: 'A',
+	            require: 'ngModel',
+	            link: function link($scope, element, attrs, ngModel) {
+	                ngModel.$validators.emailNotValid = function (value) {
+	                    return !!(value != null && value.match(/^[a-z._-]+\@[a-z._-]+\.[a-z]{2,4}$/));
 	                };
 	            }
 	        };
@@ -714,7 +946,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -736,19 +968,19 @@ webpackJsonp([0],[
 	    ngModule.config(['$stateProvider', '$urlRouterProvider', 'states', function ($stateProvider, $urlRouterProvider, states) {
 	        $stateProvider.state(states.main, {
 	            name: states.main,
-	            template: __webpack_require__(24),
+	            template: __webpack_require__(27),
 	            controller: 'mainCtrl'
 	        }).state(states.login, {
 	            name: states.login,
-	            template: __webpack_require__(25),
+	            template: __webpack_require__(28),
 	            controller: 'loginCtrl'
 	        }).state(states.newUser, {
 	            name: states.newUser,
-	            template: __webpack_require__(26),
+	            template: __webpack_require__(29),
 	            controller: 'newUserCtrl'
 	        }).state(states.inizio, {
 	            name: states.inizio,
-	            template: __webpack_require__(27),
+	            template: __webpack_require__(30),
 	            controller: 'inizioCtrl'
 	        });
 	    }]);
@@ -766,80 +998,28 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = "<div>\r\n\t<header>\r\n\t\r\n\t</header>\r\n\r\n\t<ui-view></ui-view>\r\n</div>\r\n";
 
 /***/ },
-/* 25 */
-/***/ function(module, exports) {
-
-	module.exports = "\r\n<div class=\"loginPage\">\r\n\r\n    <form class=\"loginForm box-form\" name=\"formLogin\" ng-submit=\"login()\">\r\n\r\n       <!--<h2 class=\"title\">{{::labels.login}}</h2>-->\r\n\t   <h2 class=\"title\">{{::labels.login}}</h2>\r\n       <h4 class=\"InvalidLoginMessage\"ng-show=\"invalidUsrPsw\">{{::labels.invalidUsrPsw}}</h4>\r\n\t   \r\n        <div class=\"formControl\">\r\n            <label for=\"username\">{{::labels.username}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"username\" name=\"username\" required=\"true\" ng-model=\"user.username\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formLogin.username.$error\" ng-show=\"formLogin.$submitted || formLogin.username.$touched\">\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t</div>\r\n            </div>\r\n        </div>\r\n\t\t\r\n\t\t\r\n\r\n        <div class=\"formControl\">\r\n\t\t\t<label for=\"password\">{{::labels.password}}</label>\r\n\t\t\t<input class=\"form-control\" type=\"password\" id=\"password\" name=\"password\" required=\"true\" minlength=\"8\" validate-password ng-model=\"user.password\" ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\">\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formLogin.password.$error\" ng-show=\"formLogin.$submitted || formLogin.password.$touched\">\r\n\t\t\t\t\t<div ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t\t<div ng-message=\"minlength\">{{::labels.valueTooShort}}</div>\r\n\t\t\t\t\t<div ng-message=\"passwordNotValid\">{{::labels.passwordNotValid}}</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n        </div>\r\n\r\n\t\t<div class=\"buttons\">\r\n            <button class=\"button button-primary\" type=\"submit\" ng-disabled=\"!formLogin.$valid\">{{::labels.login}}</button>\r\n            <button type=\"button\" class=\"button button-primary\" ng-click=\"newUser()\">{{::labels.newUser}}</button>\r\n        </div>\r\n\r\n        <ui-view></ui-view>\r\n    </form>\r\n</div>\r\n\r\n\r\n\r\n";
-
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	module.exports = "<button class=\"button button-primary\" type=\"button\" ng-click=\"save()\">Salva</button>";
-
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
-
-	module.exports = "<div>\r\nInizio\r\n</div>\r\n";
-
-/***/ },
 /* 28 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
-
-	/**
-	 * Created by esc08andbott on 05/11/2016.
-	 */
-
-	module.exports = function (ngModule) {
-	  __webpack_require__(29)(ngModule);
-	  __webpack_require__(21)(ngModule);
-	};
+	module.exports = "\r\n<div class=\"loginPage\">\r\n\r\n    <form class=\"loginForm box-form\" name=\"formLogin\" ng-show=\"showLogin\" ng-submit=\"login()\">\r\n\r\n       <!--<h2 class=\"title\">{{::labels.login}}</h2>-->\r\n\t   <h2 class=\"title\">{{::labels.login}}</h2>\r\n       <h4 class=\"InvalidLoginMessage\" ng-show=\"invalidUsrPsw\">{{::labels.invalidUsrPsw}}</h4>\r\n\t   \r\n        <div class=\"formControl\">\r\n            <label for=\"username\">{{::labels.username}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"username\" name=\"username\" required=\"true\" ng-model=\"user.username\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formLogin.username.$error\" ng-if=\"formLogin.$submitted || formLogin.username.$touched\" >\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t</div>\r\n            </div>\r\n        </div>\t\t\r\n\r\n        <div class=\"formControl\">\r\n\t\t\t<label for=\"password\">{{::labels.password}}</label>\r\n\t\t\t<input class=\"form-control\" type=\"password\" id=\"password\" name=\"password\" required=\"true\" minlength=\"8\" validate-password ng-model=\"user.password\" ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" >\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formLogin.password.$error\" ng-show=\"formLogin.$submitted || formLogin.password.$touched\">\r\n\t\t\t\t\t<div ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t\t<div ng-message=\"minlength\">{{::labels.valueTooShort}}</div>\r\n\t\t\t\t\t<div ng-message=\"passwordNotValid\">{{::labels.passwordNotValid}}</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n        </div>\r\n\r\n\t\t<div class=\"buttons\">\r\n            <button class=\"button button-primary\" type=\"submit\" ng-disabled=\"!formLogin.$valid\">{{::labels.login}}</button>\r\n            <button type=\"button\" class=\"button button-primary\" ng-click=\"newUser()\">{{::labels.newUser}}</button>\r\n        </div>\r\n    </form>\r\n    <ui-view></ui-view> \r\n</div>\r\n    \r\n\r\n\r\n\r\n";
 
 /***/ },
 /* 29 */
 /***/ function(module, exports) {
 
-	'use strict';
+	module.exports = "\r\n<div class=\"loginPage\">\r\n\r\n    <form class=\"loginForm box-form\" name=\"formNewUser\" ng-submit=\"save()\">\r\n\r\n\t   <h2 class=\"title\">{{::labels.newUser}}</h2>\r\n\r\n        <div class=\"formControl\">\r\n            <label for=\"firstName\">{{::labels.firstName}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"firstName\" name=\"firstName\" required=\"true\" ng-model=\"user.firstName\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formNewUser.firstName.$error\" ng-show=\"formNewUser.$submitted || formNewUser.firstName.$touched\">\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t</div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"formControl\">\r\n            <label for=\"lastName\">{{::labels.lastName}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"lastName\" name=\"lastName\" required=\"true\" ng-model=\"user.lastName\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formNewUser.lastName.$error\" ng-show=\"formNewUser.$submitted || formNewUser.lastName.$touched\">\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t</div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"formControl\">\r\n            <label for=\"email\">{{::labels.email}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"email\" name=\"email\" required=\"true\" ng-model=\"user.email\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" validate-email />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formNewUser.email.$error\" ng-show=\"formNewUser.$submitted || formNewUser.email.$touched\">\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t    <div ng-message=\"emailNotValid\">{{::labels.emailNotValid}}</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\t   \r\n        <div class=\"formControl\">\r\n            <label for=\"username\">{{::labels.username}}</label>\r\n            <input class=\"form-control\" type=\"text\" id=\"username\" name=\"username\" required=\"true\" ng-model=\"user.username\"  ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" />\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formNewUser.username.$error\" ng-show=\"formNewUser.$submitted || formNewUser.username.$touched\">\r\n                \t<div class=\"message\" ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t</div>\r\n            </div>\r\n        </div>\r\n\t\t\r\n\t\t\r\n\r\n        <div class=\"formControl\">\r\n\t\t\t<label for=\"password\">{{::labels.password}}</label>\r\n\t\t\t<input class=\"form-control\" type=\"password\" id=\"password\" name=\"password\" required=\"true\" minlength=\"8\" validate-password ng-model=\"user.password\" ng-model-options=\"{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}\" >\r\n            <div class=\"messages\">\r\n\t\t\t\t<div ng-messages=\"formNewUser.password.$error\" ng-show=\"formNewUser.$submitted || formNewUser.password.$touched\">\r\n\t\t\t\t\t<div ng-message=\"required\">{{::labels.valueNotInserted}}</div>\r\n\t\t\t\t\t<div ng-message=\"minlength\">{{::labels.valueTooShort}}</div>\r\n\t\t\t\t\t<div ng-message=\"passwordNotValid\">{{::labels.passwordNotValid}}</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n        </div>\r\n\r\n\t\t<div class=\"buttons\">\r\n            <button type=\"submit\" class=\"button button-primary\" ng-disabled=\"!formNewUser.$valid\" ng-click=\"save()\">{{::labels.saveUser}}</button>\r\n            <button type=\"button\" class=\"button button-primary\" ng-click=\"goToLogin()\">{{::labels.backToLogin}}</button>\r\n        </div>\r\n    </form>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
 
-	/**
-	 * Created by esc08andbott on 06/10/2016.
-	 */
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
 
-	module.exports = function (ngModule) {
-	    ngModule.service('backend', function ($http, $q) {
-	        return {
-
-	            //{action: {restCommand, method}, data}
-	            call: function call(callParams) {
-	                if (!callParams) {
-	                    console.error('call without parameters');
-	                    return;
-	                };
-
-	                var deferred = $q.defer();
-	                $http({
-	                    method: callParams.action.method,
-	                    url: callParams.action.url,
-	                    data: callParams.data
-	                }).then(function (result) {
-	                    deferred.resolve(result);
-	                }, function (error) {
-	                    deferred.reject(error);
-	                });
-	                return deferred.promise;
-	            }
-	        };
-	    });
-	};
+	module.exports = "<div>\r\nInizio\r\n</div>\r\n";
 
 /***/ }
 ]);
