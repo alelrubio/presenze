@@ -30,11 +30,13 @@ module.exports = function (ngModule) {
                 template: require('../directives/newUser.html'),
                 controller: 'newUserCtrl'
             })
+            
             .state(states.inizio, {
                 name: states.inizio,
                 template: require('../directives/inizio.html'),
 				controller: 'inizioCtrl'
             })
+            
     }]);
 
     ngModule.directive('appRouter', ['$state', 'states', function ($state, states) {
