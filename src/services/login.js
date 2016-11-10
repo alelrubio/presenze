@@ -7,6 +7,7 @@ module.exports = function (ngModule) {
         .service('login', ['$q', 'backend', function ($q, backend) {
 
             this.save = function (user) {
+                console.log("chiamata al SERVIZIO save in login.js");
                 var deferred = $q.defer();
                 backend.call({
                     action: {
@@ -16,6 +17,8 @@ module.exports = function (ngModule) {
                     data: user
                 })
                 .then(function (result) {
+                    console.log('ritorno SERVIZIO save in login.js');
+
                     deferred.resolve(result);
                 }, function (error) {
                     deferred.reject(error);
@@ -25,7 +28,9 @@ module.exports = function (ngModule) {
 
             this.login = function (user) {
 				console.log("chiamata al SERVIZIO login in login.js");
-				var deferred = $q.defer();
+
+
+                var deferred = $q.defer();
 
                 backend.call({
                     action: {
@@ -39,6 +44,7 @@ module.exports = function (ngModule) {
                 }, function (error) {
                     deferred.reject(error);
                 });
+                console.log("ritorno al SERVIZIO login in login.js");
                 return deferred.promise;
             }
         }])
