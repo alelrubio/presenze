@@ -8,14 +8,24 @@ module.exports = function (ngModule) {
 
         "login": {
             "login": "Login",
+            "firstName": "Nome",
+            "lastName": "Cognome",
+            "email": "Email",
+
             "password": "Password",
             "username": "Username",
             "newUser": "Nuovo Utente",
+            "saveUser": "Salva Utente",
+            "backToLogin": "Torna alla pagina di login",
+            "userSaved": "Utente salvato",
+            
         },
         "errors": {
             "valueNotInserted": "Valore richiesto non inserito",
-            "valueTooShort": "Valore inserito troppo corto",
-			"invalidUsrPsw": "Username o Password non corretti"
+            "usernameTooShort": "Il campo deve essere composto da almeno 3 caratteri",
+            "passwordTooShort": "Il campo deve essere composto da almeno 8 caratteri",
+			"invalidUsrPsw": "Username o Password non corretti",
+            "usernamealreadyDefined": "Username già presente"
         }
     })
 };
