@@ -682,7 +682,7 @@ h6, .h6 {
   margin-right: 0;
 }
 /* line 59, ../sass/app/_login.scss */
-.loginPage .loginForm .InvalidLoginMessage {
+.loginPage .loginForm .notificationMessage {
   color: red;
   text-align: center;
 }
