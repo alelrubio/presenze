@@ -13,11 +13,7 @@ module.exports = function (ngModule) {
                     return
                 };
 
-/*
-console.log("method: " + callParams.action.method);
-console.log("url: " + callParams.action.url);
-console.log("data: " + callParams.data);
-*/
+
                     console.log('call BACKEND');
                 const deferred = $q.defer();
                 $http({
