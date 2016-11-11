@@ -20,19 +20,12 @@ module.exports = function (ngModule) {
 			$scope.labels = angular.extend({}, assetsLang.login, assetsLang.errors, lang.errors);
 			$scope.invalidUsrPsw = false;
             $scope.showLogin = true;
-
-            console.log("init - login");
-
-
         };
 
         $scope.resetData = function() {
-            console.log('resetData in  LOGIN');
-
             $scope.user.username = '';
             $scope.user.password = '';
-
-            //$scope.changeShowLogin(true);            
+         
             $scope.showLogin = true;
             $scope.invalidUsrPsw = false;
             $scope.formLogin.$setPristine();            

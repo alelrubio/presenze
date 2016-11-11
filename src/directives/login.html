@@ -3,9 +3,8 @@
 
     <form class="loginForm box-form" name="formLogin" ng-show="showLogin" ng-submit="login()">
 
-       <!--<h2 class="title">{{::labels.login}}</h2>-->
 	   <h2 class="title">{{::labels.login}}</h2>
-       <h4 class="InvalidLoginMessage" ng-show="invalidUsrPsw">{{::labels.invalidUsrPsw}}</h4>
+       <h4 class="notificationMessage" ng-show="invalidUsrPsw">{{::labels.invalidUsrPsw}}</h4>
 	   
         <div class="formControl">
             <label for="username">{{::labels.username}}</label>
@@ -36,7 +35,3 @@
     </form>
     <ui-view></ui-view> 
 </div>
-    
-
-
-

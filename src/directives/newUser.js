@@ -11,57 +11,63 @@ module.exports = function (ngModule) {
 
         this.init = function() {
 
-            this.resetData();
+            this.clearData();
 
-            console.log('New User');
         };
 
 
-        this.resetData = function() {
+        this.clearData = function() {
             $scope.user.firstName = '';
             $scope.user.lastName = '';
             $scope.user.email = '';
             $scope.user.username = '';
             $scope.user.password = '';
             
-            //if($scope.formLogin != null)
-              //$scope.formLogin.$setUntouched();
         };
 
         $scope.goToLogin = function() {
-            //$scope.formLogin.$setUntouched();
-            //self.init();
-            //$scope.showLogin = true;
-            //$scope.changeShowLogin(true);
-            $scope.resetData();
+            $scope.resetData(); //pulisco i dati nella pagina di login
             $state.go(states.login);
+
+        };
+
+
+        $scope.checkAndSave = function() {
+            $scope.usernameAlredyDefined = false;
+
+            login.checkUsername($scope.user)
+                .then(function(result) {
+                    
+                    if (result.data == false) {
+                        //se non trovo utente allora procedo al salvataggio
+                        $scope.save($scope.user) 
+                        
+                    }
+                    else {
+                        //Utente già presente presente
+                        $scope.usernameAlredyDefined = true;
+                        $state.go(states.newUser);
+                    }
+                
+                
+                }, 
+                function (error) {
+                    console.log('error: ', error)
+                
+                })
+
 
 
         };
 
 
         $scope.save = function() {
-
-/*
-            var userdata = {
-                firstName: 'Pippetto',
-                lastName: 'Baudo',
-                email: 'pippo@baudo.it',
-                username: 'pippo',
-                password: 'Pippetto20'
-            };
-*/
-
-            console.log('save user');
-
-
             login.save($scope.user).then(function(result) {
                 console.log('User saved')
+                $scope.userSaved = true;
             }, function (error) {
                 console.log('error: ', error)
             })
-
-
 
         };
 

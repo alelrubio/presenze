@@ -1,26 +1,29 @@
 
 <div class="loginPage">
 
-    <form class="loginForm box-form" name="formNewUser" ng-submit="save()">
+    <form class="loginForm box-form" name="formNewUser" ng-submit="checkAndSave()">
 
-	   <h2 class="title">{{::labels.newUser}}</h2>
+	    <h2 class="title">{{::labels.newUser}}</h2>
+        <h4 class="notificationMessage" ng-show="userSaved">{{::labels.userSaved}}</h4>
 
         <div class="formControl">
             <label for="firstName">{{::labels.firstName}}</label>
-            <input class="form-control" type="text" id="firstName" name="firstName" required="true" ng-model="user.firstName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <input class="form-control" type="text" id="firstName" name="firstName" required="true" ng-model="user.firstName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" validate-name/>
             <div class="messages">
 				<div ng-messages="formNewUser.firstName.$error" ng-show="formNewUser.$submitted || formNewUser.firstName.$touched">
-                	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+               	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+                <div ng-message="nameNotValid">{{::labels.nameNotValid}}</div>
 				</div>
             </div>
         </div>
 
         <div class="formControl">
             <label for="lastName">{{::labels.lastName}}</label>
-            <input class="form-control" type="text" id="lastName" name="lastName" required="true" ng-model="user.lastName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <input class="form-control" type="text" id="lastName" name="lastName" required="true" ng-model="user.lastName"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" validate-name/>
             <div class="messages">
 				<div ng-messages="formNewUser.lastName.$error" ng-show="formNewUser.$submitted || formNewUser.lastName.$touched">
                 	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+                    <div ng-message="nameNotValid">{{::labels.nameNotValid}}</div>
 				</div>
             </div>
         </div>
@@ -38,10 +41,15 @@
 	   
         <div class="formControl">
             <label for="username">{{::labels.username}}</label>
-            <input class="form-control" type="text" id="username" name="username" required="true" ng-model="user.username"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" />
+            <input class="form-control" type="text" id="username" name="username" required="true" minlength="3" ng-model="user.username"  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 }}" validate-username/>
             <div class="messages">
 				<div ng-messages="formNewUser.username.$error" ng-show="formNewUser.$submitted || formNewUser.username.$touched">
                 	<div class="message" ng-message="required">{{::labels.valueNotInserted}}</div>
+                    <div ng-message="minlength">{{::labels.usernameTooShort}}</div>
+                    <div ng-message="usernameNotValid">{{::labels.usernameNotValid}}</div>
+                    <div ng-show="usernameAlredyDefined">{{::labels.usernamealreadyDefined}}</div>
+
+                    
 				</div>
             </div>
         </div>
@@ -54,23 +62,16 @@
             <div class="messages">
 				<div ng-messages="formNewUser.password.$error" ng-show="formNewUser.$submitted || formNewUser.password.$touched">
 					<div ng-message="required">{{::labels.valueNotInserted}}</div>
-					<div ng-message="minlength">{{::labels.valueTooShort}}</div>
+					<div ng-message="minlength">{{::labels.passwordTooShort}}</div>
 					<div ng-message="passwordNotValid">{{::labels.passwordNotValid}}</div>
 				</div>
 			</div>
         </div>
 
 		<div class="buttons">
-            <button type="submit" class="button button-primary" ng-disabled="!formNewUser.$valid" ng-click="save()">{{::labels.saveUser}}</button>
+            <button type="submit" class="button button-primary" ng-disabled="!formNewUser.$valid">{{::labels.saveUser}}</button>
             <button type="button" class="button button-primary" ng-click="goToLogin()">{{::labels.backToLogin}}</button>
         </div>
     </form>
 
 </div>
-
-
-
-
-
-
-
