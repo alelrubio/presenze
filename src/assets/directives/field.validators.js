@@ -5,6 +5,17 @@
 module.exports = function (ngModule) {
 
     ngModule
+        .directive('validateUsername', function() {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function($scope, element, attrs, ngModel) {
+                    ngModel.$validators.usernameNotValid = function(value){
+                        return !!(value != null && value.match(/^[A-Za-z][A-Za-z0-9._-]/));
+                    };
+                }
+            }
+        })
 
         .directive('validatePassword', function() {
             return {
@@ -12,8 +23,6 @@ module.exports = function (ngModule) {
                 require: 'ngModel',
                 link: function($scope, element, attrs, ngModel) {
                     ngModel.$validators.passwordNotValid = function(value){
-                        console.log("VALUE " + value);
-
                         return !!(value != null && value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/));
                     };
                 }
@@ -30,4 +39,17 @@ module.exports = function (ngModule) {
                 }
             }
         })
+
+        .directive('validateName', function() {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function($scope, element, attrs, ngModel) {
+                    ngModel.$validators.nameNotValid = function(value){
+                        return !!(value != null && value.match(/^[a-z ,.'-]+$/i));
+                    };
+                }
+            }
+        })
+
 };
