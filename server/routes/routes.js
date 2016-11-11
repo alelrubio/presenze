@@ -11,20 +11,36 @@ module.exports = function (server) {
         if(err) {
             throw err
         }
-
+        
         server.route({
             method: 'GET',
             path: '/',
             handler: function(request, reply) {
+                console.log(server.info.path);
                 reply.file('./dist/start.html');
             }
         });
 
+
+		server.route({
+            method: 'POST',
+            path: '/login',
+            handler: userController.login
+        });
+		
         server.route({
             method: 'POST',
             path: '/user/save',
             handler: userController.create
         });
+
+
+        server.route({
+            method: 'POST',
+            path: '/user/checkUsername',
+            handler: userController.checkUsername
+        });
+
 
         server.route({
             method: 'GET',
@@ -34,6 +50,7 @@ module.exports = function (server) {
             }
         });
 
+
         server.route({
             method: 'GET',
             path: '/bundle.vendor.js',
@@ -41,5 +58,6 @@ module.exports = function (server) {
                 reply.file('./dist/bundle.vendor.js')
             }
         });
+
     })
 };
